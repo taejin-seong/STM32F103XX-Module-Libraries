@@ -1,10 +1,10 @@
 ## Component<br>
 
 
-|**Part Name**|**Image Link**|**Implementation**|
-|:---:|:---:|:---:|
-|DFplayer Mini|[📌](https://www.devicemart.co.kr/goods/view?no=1278727)|✓|
-|NRF24L01|[📌](https://www.devicemart.co.kr/goods/view?no=12506373)|✓|
+|***Part Name***|***Image Link***|***Implementation***|
+|---|:---:|:---:|
+|**DFplayer Mini**|[📌](https://www.devicemart.co.kr/goods/view?no=1278727)|✓|
+|**NRF24L01**|[📌](https://www.devicemart.co.kr/goods/view?no=12506373)|✓|
 
 
 <br><br>
