@@ -33,7 +33,8 @@
 </details>
 
 
-<br><br><br>
+<br><br>
+
 
 ## Cube MX Setting<br>
 ### 1. Clock Configuration
@@ -112,3 +113,31 @@
 <br><br>
 </div>
 </details>
+
+<br>
+
+
+## How to use<br>
+  테스트를 하기 위해서는 `stm32f103_fw_module → src → main.c` 에서 주석을 해제 또는 설정해야 한다.
+
+```C
+#include "main.h"
+
+int main(void)
+{
+	hwInit();
+	apInit();
+
+/* Choose  Test Function */
+  	apBoardTest();
+//	apUartTest();
+//	apGpioTest();
+//  apDFPlayerTest();
+//	apNRF24L01RxTest();
+//	apNRF24L01TxTest();
+
+    return 0;
+}
+```
+<br><br>
+## Note<br>
