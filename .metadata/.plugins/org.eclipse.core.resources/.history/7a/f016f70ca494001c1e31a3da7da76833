@@ -1,0 +1,92 @@
+/*
+ * dfplayer.h
+ *
+ *  Created on: 2022. 2. 23.
+ *      Author: sungt
+ */
+
+#ifndef SRC_COMMON_HW_INCLUDE_DFPLAYER_H_
+#define SRC_COMMON_HW_INCLUDE_DFPLAYER_H_
+
+#include "hw_def.h"
+
+
+#ifdef _USE_HW_DFPLAYER
+
+/* Serial Communication Commands */
+
+
+/*
+ *      Define                     |  CMD  |       Description        |   Parameters (16bit)
+ *------------------------------------------------------------------------------------------------------------------------------------
+ */
+
+// Directly send commands, no parameters returned
+/* Control Commands */
+
+#define CMD_NEXT                      0x01    //   다음곡 재생
+#define CMD_PREVIOUS                  0x02    //   이전곡 재생
+#define CMD_SET_TRAKING               0x03    //   트랙 범위 파라미터 지정 		  0 ~ 2999
+#define CMD_INC_VOLUME                0x04    //   볼륨 증가
+#define CMD_DEC_VOLUME                0x05    //   볼륨 감소
+#define CMD_SET_VOLUME                0x06    //   볼륨 지정 				  0 ~ 30
+#define CMD_SET_EQ                    0x07    //   EQ (음향효과) 지정		  0 : Normal / 1 : Pop / 2 : Rock / 3 : Jazz / 4 : Classic / 5 : Base
+#define CMD_SET_PLAYBACK_MODE         0x08    //   재생 모드 지정 			  0 : Repeat / 1 : folder repeat / 2 : single repeat / 3 : random
+#define CMD_SET_PLAYBACK_SOURCE       0x09    //   재생 시킬 저장 장치 지정 		  0 : U / 1 : TF / 2 : AUX / 3 : SLEEP / 4 : FLASH
+#define CMD_ENTER_INTO_STANDBY        0x0A    //   저전력 모드 진입
+#define CMD_NORMAL_WORK               0x0B
+#define CMD_RESET                     0x0C    //   모듈 리셋
+#define CMD_PLAYBACK                  0x0D    //   재생
+#define CMD_PAUSE                     0x0E    //   정지
+#define CMD_SET_PLAY_FOLDER_FILE      0x0F    //   재생 폴더 지정                                0 ~ 10
+#define CMD_VOLUME_ADJUST             0x10    //   볼륨 조정 				  DH = 1: Open volume adjust / DL = set volume gain 0 ~ 31
+#define CMD_REPEAT                    0x11    //   반복 재생				  0 : stop play / 1 : start repeat play
+
+
+/* Query commands */
+#define MP3_Q_STAY1                    0x3C
+#define MP3_Q_STAY2                    0x3D
+#define MP3_Q_STAY3                    0x3E
+#define MP3_Q_SEND_PRM                0x3F
+#define MP3_Q_ERROR                    0x40
+#define MP3_Q_REPLY                    0x41
+#define MP3_Q_STATUS                0x42
+#define MP3_Q_VALUE                    0x43
+#define MP3_Q_EQ                    0x44
+#define MP3_Q_PLAYBACK_MODE            0x45
+#define MP3_Q_SOFT_VERSION            0x46
+#define MP3_Q_TF_CARD_FILES            0x47
+#define MP3_Q_U_DISK_CARD_FILES        0x48
+#define MP3_Q_FLASH_CARD_FILES        0x49
+#define MP3_Q_KEEPON                0x4A
+#define MP3_Q_CURRENT_TRACK_TF        0x4B
+#define MP3_Q_CURRENT_TRACK_U_DISK    0x4C
+#define MP3_Q_CURRENT_TRACK_FLASH    0x4D
+////////////////////////////////////////////////////////////////////////////////
+//Commands parameters
+////////////////////////////////////////////////////////////////////////////////
+#define MP3_EQ_Normal                    0
+#define MP3_EQ_Pop                        1
+#define MP3_EQ_Rock                        2
+#define MP3_EQ_Jazz                        3
+#define MP3_EQ_Classic                    4
+#define MP3_EQ_Base                        5
+#define MP3_PLAYBACK_MODE_Repeat        0
+#define MP3_PLAYBACK_MODE_folder_repeat    1
+#define MP3_PLAYBACK_MODE_single_repeat    2
+#define MP3_PLAYBACK_MODE_random        3
+#define MP3_PLAYBACK_SOURCE_U            0
+#define MP3_PLAYBACK_SOURCE_TF            1
+#define MP3_PLAYBACK_SOURCE_AUX            2
+#define MP3_PLAYBACK_SOURCE_SLEEP        3
+#define MP3_PLAYBACK_SOURCE_FLASH        4
+
+bool dfplayerInit(void);
+
+
+
+
+
+#endif /* _USE_HW_DFPLAYER */
+
+#endif /* SRC_COMMON_HW_INCLUDE_DFPLAYER_H_ */

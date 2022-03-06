@@ -1,0 +1,77 @@
+/*
+ * gpio.c
+ *
+ *  Created on: 2022. 2. 23.
+ *      Author: sungt
+ */
+
+
+#include "gpio.h"
+
+
+
+
+
+
+typedef struct
+{
+  GPIO_TypeDef  *port;
+  uint16_t       pin;
+  uint8_t        mode;
+  GPIO_PinState  on_state;
+  GPIO_PinState  off_state;
+  bool           init_vlaue;
+
+}gpio_tbl_t;
+
+
+
+
+gpio_tbl_t gpio_tbl[GPIO_MAX_CH] =
+{
+         /* GPIO을 사용할 Port와 Pin을 입력하세요.*/
+    {GPIOB, GPIO_PIN_9, _DEF_INPUT_PULLUP, GPIO_PIN_RESET, GPIO_PIN_SET, _DEF_HIGH},
+};
+
+
+
+
+bool gpioInit(void)
+{
+  bool ret = true;
+
+  for(int i = 0; i < GPIO_MAX_CH)
+
+
+  return ret;
+
+}
+
+
+bool gpioPinMode(uint8_t ch, uint8_t mode)
+{
+  bool ret = true;
+
+  return ret;
+}
+
+
+void gpioPinWrite(uint8_t ch, bool value)
+{
+
+}
+
+
+bool gpioPinRead(uint8_t ch)
+{
+  bool ret = false;
+
+  return ret;
+
+}
+
+
+void gpioPinToogle(uint8_t ch)
+{
+
+}

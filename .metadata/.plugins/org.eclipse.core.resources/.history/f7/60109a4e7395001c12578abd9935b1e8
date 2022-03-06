@@ -1,0 +1,315 @@
+/*
+ * dfplayer.c
+ *
+ *  Created on: 2022. 2. 23.
+ *      Author: sungt
+ */
+
+
+#include "dfplayer.h"
+#include "uart.h"
+
+
+//static uint8_t rx_buf[DFPLAYER_COMMUNICATION_SIZE];
+static uint8_t tx_buf[DFPLAYER_COMMUNICATION_SIZE];
+
+
+/* dfplayer.c 내 에서만 사용하는 함수이므로 static으로 선언 */
+static void 	dfplayer_SendControlMessage(uint8_t cmd, uint8_t para_msb, uint8_t para_lsb);
+static uint16_t dfplayer_Checksum(void);
+
+
+
+
+
+
+/**
+ * @brief	CMD 명령어 전송 함수
+ * @note	내부에서만  사용하는  함수
+ * @param  	cmd  				Control Commands define set,  dfplayer.h 참고
+ * @param  	para_msb  			Commands Parameters define set, dfplayer.h 참고, 필요없을 경우  0
+ * @param  	para_lsb  			Commands Parameters define set, dfplayer.h 참고 , 필요없을 경우 0
+ * @warning UART1이 아닌 다른 UART를 사용하는 경우  _DEF_UARTx 변경
+ */
+void dfplayer_SendControlMessage( uint8_t cmd, uint8_t para_msb, uint8_t para_lsb)
+{
+	tx_buf[START_INDEX] 		= START;
+	tx_buf[VERSION_INDEX]	 	= VERSION;
+	tx_buf[DATA_LENGTH_INDEX] 	= DATA_LENGTH;
+	tx_buf[CMD_INDEX] 			= cmd;
+	tx_buf[FEEDBACK_INDEX] 		= NO_FEED_BACK;
+	tx_buf[PARAMETER_MSB_INDEX] = para_msb;
+	tx_buf[PARAMETER_LSB_INDEX] = para_lsb;
+
+	uint16_t checksum = dfplayer_Checksum();
+
+	tx_buf[CHECKSUM_MSB_INDEX]  = (uint8_t)(checksum >> 8);
+	tx_buf[CHECKSUM_LSB_INDEX]  = (uint8_t)(checksum & 0xFF);
+	tx_buf[END_INDEX] 			= END;
+
+	for (int i = 0; i < 10; i++)
+	{
+		uartWrite(_DEF_UART1, (uint8_t *)&tx_buf[i], DFPLAYER_COMMUNICATION_SIZE);
+		//HAL_UART_Transmit_DMA(&huart1,  (uint8_t *)&tx_buf[i], DFPLAYER_COMMUNICATION_SIZE);	/* stm32cubeMX에서 제공하는 DMA UART를 사용하는 경우 */
+	}
+
+}
+
+
+
+/**
+ * @brief	DFplayer 직렬 포멧에  필요한 체크썹 바이트를 구하기 위한 계산 수행
+ * @note	내부에서만  사용하는  함수
+ *
+ */
+uint16_t dfplayer_Checksum(void)
+{
+	uint16_t checksum = 0;
+
+	for (int i = VERSION_INDEX; i <= PARAMETER_LSB_INDEX; i ++)
+	{
+		checksum += tx_buf[i];
+	}
+
+	checksum = 0xFFFF - checksum + 1; // 2의 보수를 취함, checksum 공식
+
+	return checksum;
+}
+
+
+
+/**
+ * @brief	DFplayer 초기화 함수
+ * @note 	DFplayer 모듈이  전원이 켜진 후 초기화되기까지 1.5~ 3sec 정도 필요
+ *
+ */
+void dfplayer_Init(void)
+{
+	delay_ms(15000);
+}
+
+
+
+/**
+ * @brief   다음 mp3 파일 재생
+ *
+ */
+void dfplayer_Next(void)
+{
+	dfplayer_SendControlMessage(CMD_NEXT, 0, 0);
+}
+
+
+
+/**
+ * @brief 	이전 mp3 파일 재생
+ *
+ */
+void dfplayer_Previous(void)
+{
+	dfplayer_SendControlMessage(CMD_PREVIOUS, 0, 0);
+}
+
+
+/**
+ * @brief 	트랙번호 지정하기
+ * @note 	SD카드 또는 U 디스크 등의 저장장치의  최상위 폴더에 0001.mp3/wmv ~ 3000.mp3/wmv 의 넘버링을한  파일이 존재하면 재생하고싶은 특정 track의 넘버를 입력.
+ * 			만약 1000.mp3파일을 지정한다면 1000은 hex로 0x03E8 이므로  para_msb에 0x03, para_lsb에 0xE8이 직렬 포멧으로 지정되어 uart로 전송됨
+ * @param  	track  			1 ~ 30000 (or 0 ~ 2999) 파일명 넘버링에 따라 둘 중 하나의 범위를 가짐
+ * @warning ADVERT 특수 폴더 사용 안할 시에는  0 ~ 255의 기본 트랙 범위를 가짐
+ */
+void dfplayer_SetTrakNumber(int16_t track)
+{
+	dfplayer_SendControlMessage(CMD_SET_TRAK_NUMBER, (uint8_t)(track >> 8), (uint8_t)track & 0xFF);
+}
+
+
+/**
+ * @brief 	볼륨 증가
+ *
+ */
+void dfplayer_IncreaseVolume(void)
+{
+	dfplayer_SendControlMessage(CMD_INC_VOLUME, 0, 0);
+}
+
+
+
+/**
+ * @brief 	볼륨 감소
+ *
+ */
+void dfplayer_DecreaseVolume(void)
+{
+	dfplayer_SendControlMessage(CMD_DEC_VOLUME, 0, 0);
+}
+
+
+
+/*
+ * @brief  	초기 볼륨값 설정
+ * @param  	volume  		1 ~ 30까지 선택
+ *
+ */
+void dfplayer_SetVolume(uint8_t volume)
+{
+	if (volume > 30)
+	{
+		volume = 30;
+	}
+
+	dfplayer_SendControlMessage(CMD_SET_VOLUME, 0, volume);
+
+}
+
+
+
+/*
+ * @brief   음향효과 설정
+ * @param  	source 			EQ_NORMAL 	: 기본
+ *			  			    EQ_POP  	: 팝
+ *			  			    EQ_ROCK		: 락
+ *			  			    EQ_JAZZ 	: 재즈
+ *			  			    EQ_CLASSIC	: 클래식
+ *			  			    EQ_BASE   	: 베이스
+ */
+void dfplayer_SetEQ(int8_t eq)
+{
+	if (eq > EQ_BASE)
+	{
+		eq = EQ_NORMAL ;
+	}
+
+	dfplayer_SendControlMessage(CMD_SET_EQ, 0, eq);
+}
+
+
+
+/*
+ * @brief  	재생 모드 설정
+ * @param  	mode 			PLAYBACK_MODE_REPEAT 		 : 반복재생
+ *			  			    PLAYBACK_MODE_FOLDER_REPEAT  : 폴더 내 track 반복재생
+ *			  			    PLAYBACK_MODE_SINGLE_REPEAT  : 단일 곡 반복 재생
+ *			  			    PLAYBACK_MODE_RANDOM		 : 랜덤재생
+ */
+void dfplayer_SetMode(int8_t mode)
+{
+
+	dfplayer_SendControlMessage(CMD_SET_PLAYBACK_MODE, 0, mode);
+}
+
+
+
+/*
+ * @brief  	사용된 저장장치 설정
+ * @param  	source 			PLAYBACK_SOURCE_U 		: U 디스크
+ *			  			    PLAYBACK_SOURCE_TF  	: TF 카드 (SD카드 )
+ *			  			    PLAYBACK_SOURCE_AUX 	: AUX 케이블
+ *			  			    PLAYBACK_SOURCE_SLEEP
+ *			  			    PLAYBACK_SOURCE_FLASH	: Flash
+ */
+void dfplayer_SetSource(uint8_t source)
+{
+
+	if (source > PLAYBACK_SOURCE_FLASH)
+	{
+		return ;
+	}
+
+	dfplayer_SendControlMessage(CMD_SET_PLAYBACK_SOURCE, 0, source);
+
+}
+
+
+
+/**
+ * @brief	스탠바이 모드 진입
+ * @note 	low power loss, 저전력
+ *
+ */
+void dfplayer_Standby(void)
+{
+	dfplayer_SendControlMessage(CMD_ENTER_INTO_STANDBY, 0, 0);
+}
+
+
+
+/**
+ * @brief	DFplayer 리셋
+ *
+ */
+void dfplayer_Reset(void)
+{
+	dfplayer_SendControlMessage(CMD_RESET, 0, 0);
+}
+
+
+
+/**
+ * @brief 	mp3 파일 재생
+ *
+ */
+void dfplayer_Play(void)
+{
+	dfplayer_SendControlMessage(CMD_PLAYBACK, 0, 0);
+}
+
+
+
+/**
+ * @brief 	mp3 파일 일시정지
+ *
+ */
+void dfplayer_Pause(void)
+{
+	dfplayer_SendControlMessage(CMD_PAUSE, 0, 0);
+}
+
+
+
+/**
+ * @brief	폴더 안에 재생하고 싶은 mp3 파일 재생 설정
+ * @note	기본 폴더, MP3 파일 형식을 따름
+ * @param  	folder  				01 ~ 99 까지
+ * @param  	track  					001 ~ 255 까지
+ */
+void dfplayer_PlayTrackInFolder(uint8_t folder, uint8_t track)
+{
+	if (folder > 99)
+	{
+		folder = 99;
+	}
+
+	dfplayer_SendControlMessage(CMD_SET_PLAY_TRACK_FOLDER, folder, track);
+}
+
+
+
+/**
+ * @brief   볼륨 조정
+ * @note	볼륨 증폭 값 설정, Parameter_MSB에 1을 대입하여 볼륨 조정기능을 활성화 시킴
+ * @param  	gain  				    1 ~ 31까지 선택
+ */
+void dfplayer_VolumeAdjust( uint8_t gain)
+{
+	uint8_t on = 1;
+
+	if (gain > 31)
+	{
+		gain = 31;
+	}
+
+	dfplayer_SendControlMessage(CMD_VOLUME_ADJUST, on, gain);
+
+}
+
+
+/**
+ * @brief   전체 반복 재생
+ * @param  	repeat  			     0 : stop play / 1 : start repeat play, 0과 1 둘중 하나 선택
+ */
+void dfplayer_Repeat(uint8_t repeat)
+{
+	dfplayer_SendControlMessage(CMD_REPEAT, 0, repeat);
+
+}

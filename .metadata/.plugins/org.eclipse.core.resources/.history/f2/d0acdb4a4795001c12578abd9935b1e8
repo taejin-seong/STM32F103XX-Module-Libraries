@@ -1,0 +1,122 @@
+/*
+ * dfplayer.c
+ *
+ *  Created on: 2022. 2. 23.
+ *      Author: sungt
+ */
+
+
+#include "dfplayer.h"
+#include "uart.h"
+
+
+//static uint8_t rx_buf[DFPLAYER_COMMUNICATION_SIZE];
+static uint8_t tx_buf[DFPLAYER_COMMUNICATION_SIZE];
+
+
+/* dfplayer.c 내 에서만 사용하는 함수이므로 static으로 선언 */
+static void 	dfplayer_SendControlMessage(uint8_t cmd, uint8_t para_msb, uint8_t para_lsb);
+static uint16_t dfplayer_Checksum(void);
+
+
+
+
+
+
+bool dfplayer_Init(void)
+{
+	bool ret = true;
+
+	return ret;
+}
+
+
+void dfplayer_SendControlMessage( uint8_t cmd, uint8_t para_msb, uint8_t para_lsb)
+{
+	tx_buf[START_INDEX] 		= START;
+	tx_buf[VERSION_INDEX]	 	= VERSION;
+	tx_buf[DATA_LENGTH_INDEX] 	= DATA_LENGTH;
+	tx_buf[CMD_INDEX] 			= cmd;
+	tx_buf[FEEDBACK_INDEX] 		= NO_FEED_BACK;
+	tx_buf[PARAMETER_MSB_INDEX] = para_msb;
+	tx_buf[PARAMETER_LSB_INDEX] = para_lsb;
+
+	uint16_t checksum = dfplayer_Checksum();
+
+	tx_buf[CHECKSUM_MSB_INDEX]  = (uint8_t)((checksum & 0xFF00) >> 8);
+	tx_buf[CHECKSUM_LSB_INDEX]  = (uint8_t)(checksum & 0xFF00);
+	tx_buf[END_INDEX] 			= END;
+
+	for (int i = 0; i < 10; i++)
+	{
+	//	uartWrite(_DEF_UART1, (uint8_t *)&tx_buf[i], DFPLAYER_COMMUNICATION_SIZE);  //todo 여기도 일단 수정 고려
+		uartPrintf(_DEF_UART1, "%d", tx_buf[i]); /* UART 채널 변경기 _DEF_UART1 변경할 것  */
+	}
+
+}
+
+
+uint16_t dfplayer_Checksum(void)
+{
+	uint16_t checksum = 0;
+
+	for (int i = VERSION_INDEX; i <= PARAMETER_LSB_INDEX; i ++)
+	{
+		checksum += tx_buf[i];
+	}
+
+//	checksum = 0xFFFF - checksum + 1; // 2의 보수를 취함, checksum 공식 //todo 여기도 일단 킵
+
+	return -checksum;
+}
+
+
+
+void dfplayer_Play(void)
+{
+	//dfplayer_SendControlMessage(CMD_PLAYBACK, 0, 0); //todo 여기도 일단 주석처리
+	dfplayer_SendControlMessage(0x12, 0, 1); //todo 최상위 mp3 폴더에 0001.mp3 파일 실행 하게하기
+
+}
+
+
+void dfplayer_Pause(void)
+{
+	dfplayer_SendControlMessage(CMD_PAUSE, 0, 0);
+}
+
+void dfplayer_Next(void)
+{
+	dfplayer_SendControlMessage(CMD_NEXT, 0, 0);
+}
+
+void dfplayer_Previous(void)
+{
+	dfplayer_SendControlMessage(CMD_PREVIOUS, 0, 0);
+}
+
+
+void dfplayer_SetVolume(uint8_t volume)
+{
+	if (volume > 30)
+	{
+		volume = 30;
+	}
+
+	dfplayer_SendControlMessage(CMD_SET_VOLUME, 0, volume);
+
+}
+
+
+void dfplayer_SetSource(uint8_t source)
+{
+
+	if (source > PLAYBACK_SOURCE_FLASH)
+	{
+		return ;
+	}
+
+	dfplayer_SendControlMessage(CMD_SET_PLAYBACK_SOURCE, 0, source);
+
+}
+

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;stm32f103_fw_module/src/hw/driver/uart.c&apos; to &apos;1uart.c&apos;" description="Rename resource &apos;uart.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/hw/driver/uart.c" name="1uart.c" stamp="1645550351503" updateReferences="true"/>
+</session>

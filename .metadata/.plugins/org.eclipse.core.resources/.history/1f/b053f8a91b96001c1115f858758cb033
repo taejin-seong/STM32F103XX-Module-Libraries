@@ -1,0 +1,151 @@
+/*
+ * ap.c
+ *
+ *  Created on: Mar 14, 2021
+ *      Author: sungt
+ */
+
+#ifndef SRC_AP_AP_C_
+#define SRC_AP_AP_C_
+
+
+#include "ap.h"
+
+
+
+
+
+void apInit(void)
+{
+   uartOpen(_DEF_UART1, 9600); /* DFplayer와 통신하기 위한 UART 설정, Default : 9600/8/n/1/n */
+   uartOpen(_DEF_UART2, 115200);
+}
+
+
+
+/* Black Pill 보드 내부 LED 테스트 */
+void apBoardTest(void)
+{
+  uint32_t pre_time = millis();
+
+  while(1)
+  {
+    if (millis() - pre_time >= 100)
+    {
+      pre_time = millis();
+      ledToggle(_DEF_LED1);
+    }
+  }
+
+}
+
+
+
+/* UART 테스트  */
+void apUartTest(void)
+{
+  uartPrintf(_DEF_UART1, "UART BaudRate : %d\n", uartGetBaud(_DEF_UART1));
+
+  while(1)
+  {
+    if (uartAvailable(_DEF_UART1) > 0)
+    {
+
+      uartPrintf(_DEF_UART1, "Rx Data : %c , 0x%X\n", uartRead(_DEF_UART1));
+    }
+  }
+
+}
+
+
+
+/* PINB 9에 외부 LED 부품 연결 후 GPIO 테스트 */
+void apGpioTest(void)
+{
+  gpioPinMode(_DEF_GPIO1, _DEF_OUTPUT);
+
+  while(1)
+  {
+    gpioPinToogle(_DEF_GPIO1);
+    delay_ms(100);
+  }
+
+}
+
+
+/* DFplayer 모듈  테스트 */
+void apDFPlayerTest(void)
+{
+
+	char rx_data;
+
+	dfplayer_SetSource(PLAYBACK_SOURCE_TF);
+	dfplayer_SetVolume(10);
+	dfplayer_SetEQ(EQ_CLASSIC);
+	dfplayer_SetMode(PLAYBACK_MODE_FOLDER_REPEAT);
+
+	while(1)
+	{
+		if (uartAvailable(_DEF_UART2) > 0)
+		{
+			rx_data = uartRead(_DEF_UART2);
+			uartPrintf(_DEF_UART2, "%c\n", rx_data);
+
+			switch (rx_data)
+			{
+				case 'S':
+					dfplayer_Play();
+					uartPrintf(_DEF_UART2, "Playing...\r\n");
+					break;
+
+				case 'D':
+					dfplayer_Next();
+					uartPrintf(_DEF_UART2, "Playing Next Song...\r\n");
+					break;
+
+				case 'A':
+					dfplayer_Previous();
+					uartPrintf(_DEF_UART2, "Playing Previous Song...\r\n");
+					break;
+
+				case 'Q':
+					dfplayer_Pause();
+					uartPrintf(_DEF_UART2, "Pause\r\n");
+					break;
+
+				case 'W':
+					dfplayer_IncreaseVolume();
+					uartPrintf(_DEF_UART2, "Volume Up\r\n");
+					break;
+
+				case 'X':
+					dfplayer_DecreaseVolume();
+					uartPrintf(_DEF_UART2, "Volume Down\n");
+					break;
+
+				case 'V':
+					dfplayer_Stop();
+					uartPrintf(_DEF_UART2, "Stop\n");
+					break;
+
+				case 'E':
+					dfplayer_RandomTrack();
+					uartPrintf(_DEF_UART2, "Folder repeat\n");
+					break;
+
+
+
+				default:
+					break;
+			}
+		}
+
+	}
+
+}
+
+
+
+
+
+#endif /* SRC_AP_AP_C_ */

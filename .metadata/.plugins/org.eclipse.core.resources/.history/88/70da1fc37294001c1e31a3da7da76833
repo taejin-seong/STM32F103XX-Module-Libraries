@@ -1,0 +1,13 @@
+/*
+ * gpio.h
+ *
+ *  Created on: 2022. 2. 23.
+ *      Author: sungt
+ */
+
+#ifndef SRC_COMMON_HW_INCLUDE_GPIO_H_
+#define SRC_COMMON_HW_INCLUDE_GPIO_H_
+
+
+
+#endif /* SRC_COMMON_HW_INCLUDE_GPIO_H_ */
