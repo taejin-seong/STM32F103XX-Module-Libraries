@@ -45,20 +45,20 @@
 <br><br>
 
 ### 3. Peripheral Configuration<br>
-#### 3.1 UART
+#### 3.1. UART
 - UART2 is the same as USART1<br><br>
  <img src="https://user-images.githubusercontent.com/70312248/156927378-6c0fd54e-bd78-437c-8f49-289d4a90c563.png" width="1000" height="600"/> <br><br>
 
-#### 3.2 SPI
+#### 3.2. SPI
  <img src="https://user-images.githubusercontent.com/70312248/156927368-b1cff53b-974c-42e0-80a3-1a3baf264159.png" width="1000" height="800"/> <br><br>
 
-#### 3.3 DMA
+#### 3.3. DMA
 - USART1, USART2 Mode is **RX Mode : Circular, Tx Mode : Normal** <br><br>
 ![image](https://user-images.githubusercontent.com/70312248/156927328-636cea39-5139-4d75-a712-6036b3b737fb.png)<br><br>
 
-#### 3.4 NVIC
+#### 3.4. NVIC
 ![image](https://user-images.githubusercontent.com/70312248/156927343-a8df82b3-ea2e-406c-b25b-9c5e10f65b24.png)<br><br>
 
-#### 3.5 GPIO
+#### 3.5. GPIO
 ![image](https://user-images.githubusercontent.com/70312248/156927391-3ef2943d-5674-498d-b65c-b1d23465881e.png)<br><br>
 
