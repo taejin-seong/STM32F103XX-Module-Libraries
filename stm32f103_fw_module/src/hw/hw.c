@@ -16,8 +16,10 @@ void hwInit(void)
 /*  TODO: HW 설정 - "하드웨어 초기화" (3) */
 
 	uartInit();
+	MX_I2C1_Init();
 	MX_SPI1_Init();
 	gpioInit();
+	clcd_Init();
 	NRF24L01_Init();
 	dfplayer_Init();
 	ledInit();

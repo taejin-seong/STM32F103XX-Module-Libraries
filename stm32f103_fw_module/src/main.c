@@ -21,8 +21,9 @@ int main(void)
 //	apUartTest();
 //	apGpioTest();
 //  apDFPlayerTest();
-	apNRF24L01RxTest();
+//	apNRF24L01RxTest();
 //	apNRF24L01TxTest();
+	apCLCDTest();
 
-    return 0;
+	return 0;
 }

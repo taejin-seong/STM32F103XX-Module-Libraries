@@ -5,3 +5,4 @@ ap.c:65:6:apGpioTest	8	static
 ap.c:80:6:apDFPlayerTest	16	static
 ap.c:155:6:apNRF24L01RxTest	264	static
 ap.c:196:6:apNRF24L01TxTest	40	static
+ap.c:236:6:apCLCDTest	208	static

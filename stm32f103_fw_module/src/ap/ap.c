@@ -232,5 +232,137 @@ void apNRF24L01TxTest(void)
 
 
 
+/* CLCD With I2C 4-bit 모드 테스트 */
+void apCLCDTest(void)
+{
+	char data1[] = "Hello, World !!";
+	char data2[] = "(*^_^*) (/^^)/";
+	char data3[] = "12345";
+	char data4[] = "67890";
+	char data5[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	char buffer[64];
+
+	uint8_t freq1 = 45/10;
+	float 	freq2 = 45./10;
+
+	while (1)
+	{
+		/* Using Array */
+		clcd_Position(0, 0);
+		clcd_Str(data1);
+		delay_ms(1000);
+
+		clcd_Position(1, 0);
+		clcd_Str(data2);
+		delay_ms(1000);
+
+
+		clcd_Clear();
+		delay_ms(500);
+
+
+		/* Using ASCII CODE */
+		clcd_Position(0, 7);
+		clcd_Data(0x4C);
+		clcd_Data(0x6F);
+		clcd_Data(0x76);
+		clcd_Data(0x65);
+		delay_ms(1000);
+
+		/* One Data */
+		clcd_Position(1, 3);
+		clcd_Data('L');
+		clcd_Data('O');
+		clcd_Data('V');
+		clcd_Data('E');
+		delay_ms(1000);
+
+
+		clcd_Clear();
+		delay_ms(500);
+
+		/* Using Command */
+		clcd_Command(CMD_ENTRY_MODE_SET_OPTION1);
+		clcd_Position(0, 7);
+		clcd_Str(data3);
+		delay_ms(500);
+
+		clcd_Command(CMD_ENTRY_MODE_SET_OPTION3);
+		clcd_Position(1, 7);
+		clcd_Str(data4);
+		delay_ms(500);
+
+
+		clcd_Clear();
+		delay_ms(500);
+
+		clcd_Position(0, 0);
+		clcd_Str(data3);
+		clcd_Position(1, 0);
+		clcd_Str(data4);
+
+		for(int i = 0; i < 3; i++)
+		{
+			clcd_Command(CMD_DISPLAY_OPTION7);
+			delay_ms(500);
+			clcd_Command(CMD_DISPLAY_OPTION8);
+			delay_ms(500);
+		}
+
+
+		clcd_Clear();
+		delay_ms(500);
+
+
+		clcd_Position(0, 0);
+		clcd_Str(data5);
+		delay_ms(500);
+
+		for(int i = 0; i < 26; i++)
+		{
+			clcd_Command(CMD_CURSOR_DISPLAY_SHIFT_OPTION3);
+			clcd_Command(CMD_CURSOR_DISPLAY_SHIFT_OPTION1);
+			delay_ms(300);
+		}
+
+		delay_ms(1000);
+		clcd_Position(0, 0);
+		clcd_Str(data5);
+		delay_ms(1000);
+		for(int i = 0; i < 26; i++)
+		{
+			clcd_Command(CMD_CURSOR_DISPLAY_SHIFT_OPTION4);
+			delay_ms(300);
+		}
+
+		delay_ms(1000);
+
+
+		clcd_Clear();
+		delay_ms(500);
+
+		/* float value */
+		sprintf(buffer, "gen: %3d kHz", freq1);
+		clcd_Position(0, 0);
+		clcd_Str(buffer);
+
+		/* Check your MCU Settings from Project Properties > C/C++ Build > Settings > Tool Settings, or add manually "-u_printf_float" in linker flags.*/
+		sprintf(buffer, "cnt: %3.3f kHz", freq2);
+		clcd_Position(1, 0);
+		clcd_Str(buffer);
+
+		delay_ms(3000);
+
+
+		clcd_Clear();
+		delay_ms(500);
+
+	}
+}
+
+
+
+
 
 #endif /* SRC_AP_AP_C_ */

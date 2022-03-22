@@ -1,0 +1,6 @@
+clcd.c:13:6:clcd_Init	8	static
+clcd.c:33:6:clcd_Command	32	static
+clcd.c:50:6:clcd_Data	32	static
+clcd.c:67:6:clcd_Str	16	static
+clcd.c:77:6:clcd_Position	16	static
+clcd.c:83:6:clcd_Clear	8	static

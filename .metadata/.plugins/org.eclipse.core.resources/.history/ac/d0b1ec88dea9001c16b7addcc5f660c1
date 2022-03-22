@@ -1,0 +1,10 @@
+/*
+ * lcd.c
+ *
+ *  Created on: 2022. 3. 22.
+ *      Author: sungt
+ */
+
+
+#include "clcd.h"
+#include "i2c.h"

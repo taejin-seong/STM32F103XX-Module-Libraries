@@ -24,6 +24,7 @@
 #define        HW_UART_MAX_CH     2
 
 #define	  _USE_HW_SPI
+#define   _USE_HW_I2C
 
 
 /*           Hardware          Parameter      */
@@ -32,6 +33,8 @@
 
 #define   _USE_HW_GPIO
 #define        HW_GPIO_MAX_CH     1
+
+#define	  _USE_HW_CLCD
 
 #define   _USE_HW_NRF24L01
 

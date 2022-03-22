@@ -21,6 +21,7 @@ src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.o: \
  C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h \
  C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h \
  C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h \
+ C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h \
  C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h \
  C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
@@ -66,6 +67,8 @@ C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/c
 C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash.h:
 
 C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_flash_ex.h:
+
+C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_i2c.h:
 
 C:/STM32\ Coding\ files/stmf103_module_drivers_set/stm32f103_fw_module/src/lib/cub_f1013c8/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 

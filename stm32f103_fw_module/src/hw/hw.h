@@ -18,7 +18,9 @@
 
 
 #include "uart.h"
+#include "i2c.h"
 #include "spi.h"
+#include "clcd.h"
 #include "nrf24l01.h"
 #include "gpio.h"
 #include "dfplayer.h"
