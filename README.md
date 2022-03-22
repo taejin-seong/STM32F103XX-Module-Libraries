@@ -5,6 +5,7 @@
 |---|:---:|:---:|
 |**DFplayer Mini**|[📌](https://www.devicemart.co.kr/goods/view?no=1278727)|✓|
 |**NRF24L01**|[📌](https://www.devicemart.co.kr/goods/view?no=12506373)|✓|
+|**1602 CLCD With I2C**|[📌](https://www.devicemart.co.kr/goods/view?no=1327456)|✓|
 
 
 <br><br>
@@ -30,6 +31,14 @@
 -  &nbsp; stm32f103_fw_module → src → ap → ap.c → void apNRF24L01TxTest(void){...}<br>
 -  &nbsp; stm32f103_fw_module → src → ap → ap.c → void apNRF24L01RxTest(void){...}<br> 
 </div>
+<hr/>
+<summary>1602 CLCD With I2C</summary>
+<div markdown="1">
+<br>
+-  &nbsp; stm32f103_fw_module → src → common → hw → include → clcd.h<br>
+-  &nbsp; stm32f103_fw_module → src → hw → driver → clcd.c<br>
+-  &nbsp; stm32f103_fw_module → src → ap → ap.c → void apCLCDTest(void){...}<br>
+</div>	
 </details>
 
 
@@ -54,7 +63,7 @@
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
-<img src="https://user-images.githubusercontent.com/70312248/156926532-3ba5d468-17f1-461b-b0ce-7aeeb1bdea12.png" width="600" height="500"/> <br>
+<img src="https://user-images.githubusercontent.com/70312248/159523835-b6dba5ad-b59c-4139-8e03-6b39ae890903.png" width="600" height="500"/> <br>
 <br><br>
 </div>
 </details>
@@ -74,7 +83,6 @@
 </div>
 </details>
 
-
 #### 3.2. SPI1
 <details>
 <summary>📌</summary><br> 
@@ -85,7 +93,17 @@
 </div>
 </details>
 
-#### 3.5. GPIO
+#### 3.3. I2C1
+<details>
+<summary>📌</summary><br> 
+• You can change parameter settings in i2c.c <br><br> 
+<div markdown="1">
+<img src="https://user-images.githubusercontent.com/70312248/159523379-8ae58c66-dec1-4064-a635-1fefafd94951.png" width="1000" height="800"/> 
+<br><br>
+</div>
+</details>
+
+#### 3.4. GPIO
 <details>
 <summary>📌</summary><br> 
 <div markdown="1">
@@ -94,7 +112,7 @@
 </div>
 </details>
 
-#### 3.3. DMA
+#### 3.5. DMA
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
@@ -105,7 +123,7 @@
 </details>
 
 
-#### 3.4. NVIC
+#### 3.6. NVIC
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
@@ -129,12 +147,14 @@ int main(void)
 	apInit();
 
 /* Choose  Test Function */
+
   	apBoardTest();
 //	apUartTest();
 //	apGpioTest();
-//  apDFPlayerTest();
+//      apDFPlayerTest();
 //	apNRF24L01RxTest();
 //	apNRF24L01TxTest();
+//      apCLCDTest();
 
     return 0;
 }
