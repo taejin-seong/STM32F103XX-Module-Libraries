@@ -1,2 +1,7 @@
 1647877077652	Rename resource 'lcd.h'
 1647877088981	Rename resource 'lcd.c'
+1648038084035	Rename resource 'max7219_8x8_led.h'
+1648038123288	Rename resource 'max7219_8x8_led.c'
+1648038245998	Rename resource '8x8_led.h'
+1648124783781	Rename resource 'dot_matrix.h'
+1648124806018	Rename resource 'dot_matrix.c'

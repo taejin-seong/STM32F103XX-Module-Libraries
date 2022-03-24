@@ -3,6 +3,22 @@
  *
  *  Created on: Mar 14, 2021
  *      Author: sungt
+ *
+ ******************************************************************************
+ * @attention
+ *
+ * clcd.h와 max7219.h의  #define에서  0x00~0x0f 부분이 중복되어 오류가 발생합니다.
+ * 따라서  clcd와 dot matrix는  동시에 테스트할 수 없습니다.
+ * 양쪽(clcd & dot matrix)을 동시에 테스트하려면 max7219.h의 #define 0x00 ~0x0f 부분을 static const하게 선언하여 사용해야합니다.
+ *
+ *
+ *
+ * An error occurs due to overlapping parts 0x00~0x0f in #define of clcd.h and max7219.h.
+ * Therefore, clcld and dot matrix cannot be tested at the same time.
+ * To test both simultaneously (clcd & dot matrix), you must use the static const declaration of #define 0x00 to 0x0f (max7219.h).
+ *
+ *
+ ******************************************************************************
  */
 
 #ifndef SRC_AP_AP_C_
@@ -231,10 +247,19 @@ void apNRF24L01TxTest(void)
 }
 
 
+/*
+ *  @attention을 참고하세요.
+ *  Please refer to @attention
+ */
 
 /* CLCD With I2C 4-bit 모드 테스트 */
 void apCLCDTest(void)
 {
+
+
+//#define _OVERLAPS_MAX7219_DEFINE_
+#ifdef  _OVERLAPS_MAX7219_DEFINE_
+
 	char data1[] = "Hello, World !!";
 	char data2[] = "(*^_^*) (/^^)/";
 	char data3[] = "12345";
@@ -359,8 +384,74 @@ void apCLCDTest(void)
 		delay_ms(500);
 
 	}
+#endif /*  _OVERLAPS_MAX7219_DEFINE_ */
+
 }
 
+
+/*
+ *  @attention을 참고하세요.
+ *  Please refer to @attention
+ */
+
+/* 8x8 Dot Matrix With SPI 모드 테스트 */
+void apDotMatrixTest(void)
+{
+
+#define _OVERLAPS_CLCD_DEFINE_
+#ifdef  _OVERLAPS_CLCD_DEFINE_
+
+	MAX7219_MatrixUpdate();
+
+	while (1)
+	{
+		MAX7219_MatrixSetRow64(0, CHR('S'));
+		MAX7219_MatrixUpdate();
+		delay_ms(300);
+
+		MAX7219_MatrixSetRow64(0, CHR('T'));
+		MAX7219_MatrixUpdate();
+		delay_ms(300);
+
+		MAX7219_MatrixSetRow64(0, CHR('A'));
+		MAX7219_MatrixUpdate();
+		delay_ms(300);
+
+		MAX7219_MatrixSetRow64(0, CHR('R'));
+		MAX7219_MatrixUpdate();
+		delay_ms(300);
+
+		MAX7219_MatrixSetRow64(0, CHR('T'));
+		MAX7219_MatrixUpdate();
+		delay_ms(300);
+
+		for(int i = 0; i < 10; i ++)
+		{
+			MAX7219_MatrixSetRow64(0, numbers[i]);
+			MAX7219_MatrixUpdate();
+			delay_ms(100);
+		}
+
+		for (int i = 0; i < 8; i ++)
+		{
+
+				MAX7219_MatrixSetRow64(0, matrix_column[i] | 0xFF);
+				MAX7219_MatrixUpdate();
+				delay_ms(300);
+
+				if (i > 0)
+				{
+					MAX7219_MatrixSetRow64(0, matrix_column[i] << i);
+					MAX7219_MatrixUpdate();
+					delay_ms(300);
+				}
+
+		}
+
+
+	}
+#endif /*  _OVERLAPS_CLCD_DEFINE_ */
+}
 
 
 

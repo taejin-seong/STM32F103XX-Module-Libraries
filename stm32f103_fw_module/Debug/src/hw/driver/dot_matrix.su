@@ -1,0 +1,8 @@
+dot_matrix.c:174:9:dotmatrix_Init	32	static
+dot_matrix.c:303:9:matriceLed_SwitchOnOff	24	static
+dot_matrix.c:332:9:matriceLed_DisplayTestMode	24	static
+dot_matrix.c:354:9:matriceLed_SetIntensity	24	static
+dot_matrix.c:375:9:matriceLed_GetDigit	24	static
+dot_matrix.c:396:9:matriceLed_DisplayString	24	static
+dot_matrix.c:430:17:matriceLed_StoreStringInBuffer	24	static
+dot_matrix.c:459:16:matriceLed_DisplayBuffer	56	static

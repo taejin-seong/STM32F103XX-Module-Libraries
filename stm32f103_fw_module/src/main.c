@@ -23,7 +23,8 @@ int main(void)
 //  apDFPlayerTest();
 //	apNRF24L01RxTest();
 //	apNRF24L01TxTest();
-	apCLCDTest();
+//	apCLCDTest();
+	apDotMatrixTest();
 
 	return 0;
 }

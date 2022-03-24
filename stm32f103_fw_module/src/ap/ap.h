@@ -19,6 +19,7 @@ void apInit(void);
 void apBoardTest(void);
 void apUartTest(void);
 void apGpioTest(void);
+void apDotMatrixTest(void);
 void apCLCDTest(void);
 void apNRF24L01RxTest(void);
 void apNRF24L01TxTest(void);

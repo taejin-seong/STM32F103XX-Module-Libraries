@@ -18,8 +18,10 @@ void hwInit(void)
 	uartInit();
 	MX_I2C1_Init();
 	MX_SPI1_Init();
+	MX_SPI2_Init();
 	gpioInit();
-	clcd_Init();
+	MAX7219_MatrixInit();
+//	clcd_Init();
 	NRF24L01_Init();
 	dfplayer_Init();
 	ledInit();

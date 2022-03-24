@@ -1,0 +1,86 @@
+/*
+ * max7219_8x8_led.h
+ *
+ *  Created on: 2022. 3. 23.
+ *      Author: sungt
+ */
+
+#ifndef SRC_COMMON_HW_INCLUDE_CLCD_H_
+#define SRC_COMMON_HW_INCLUDE_CLCD_H_
+
+#include "hw_def.h"
+
+
+#ifdef _USE_HW_DOT_MATRIX
+
+
+
+
+
+ #define SPIx                             SPI2
+ #define SPIx_CLK_ENABLE()                __HAL_RCC_SPI2_CLK_ENABLE()
+ #define SPIx_SCK_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOA_CLK_ENABLE()
+ #define SPIx_MISO_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
+ #define SPIx_MOSI_GPIO_CLK_ENABLE()      __HAL_RCC_GPIOA_CLK_ENABLE()
+
+ #define SPIx_FORCE_RESET()               __HAL_RCC_SPI1_FORCE_RESET()
+ #define SPIx_RELEASE_RESET()             __HAL_RCC_SPI1_RELEASE_RESET()
+
+ /* Definition for SPIx Pins */
+ #define SPIx_SCK_PIN                     PIO_PIN_13
+ #define SPIx_SCK_GPIO_PORT               GPIOA
+ #define SPIx_SCK_AF                      GPIO_AF5_SPI2
+ #define SPIx_MOSI_PIN                     GPIO_PIN_15
+ #define SPIx_MOSI_GPIO_PORT              GPIOA
+ #define SPIx_MOSI_AF                     GPIO_AF5_SPI2
+
+ /* Definition for CS pin */
+ #define CS_GPIO_CLK_ENABLE()       	__HAL_RCC_GPIOB_CLK_ENABLE()
+ #define CS_PIN							GPIO_PIN_8
+ #define CS_GPIO_PORT					GPIOB
+
+#define ML_NB_MAX7219	4
+
+
+
+/*
+ * MAX7219 type definition
+ */
+
+/* Command */
+typedef enum {
+	NO_OP 			= 0x00,
+	DIGIT_0 		= 0x01,
+	DIGIT_1,
+	DIGIT_2,
+	DIGIT_3,
+	DIGIT_4,
+	DIGIT_5,
+	DIGIT_6,
+	DIGIT_7,
+	DECODE_MODE		= 0x09,
+	INTENSITY		= 0x0A,
+	SCAN_LIMIT		= 0x0B,
+	SHUTDOWN		= 0x0C,
+	DISPLAY_TEST 	= 0x0F
+} max7219_cmd;
+
+
+/* Matrice state: on or off */
+#define MATRICE_ON  1
+#define MATRICE_OFF 0
+
+
+ /* API Prototypes -----------------------------------------------------------*/
+ uint8_t dotmatrix_Init(void);
+ uint8_t matriceLed_DisplayTestMode( uint8_t OnOff);
+ uint8_t matriceLed_SetIntensity( uint8_t intensity);
+ uint8_t matriceLed_SwitchOnOff( uint8_t OnOff);
+ uint8_t matriceLed_DisplayString( char string[]);
+
+
+
+
+#endif /* _USE_HW_DOT_MATRIX */
+
+#endif /* SRC_COMMON_HW_INCLUDE_CLCD_H_ */

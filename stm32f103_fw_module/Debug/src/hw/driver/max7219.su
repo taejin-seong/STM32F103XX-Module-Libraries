@@ -1,0 +1,13 @@
+max7219.c:35:6:MAX7219_Init	24	static
+max7219.c:48:6:MAX7219_Write	24	static
+max7219.c:77:6:MAX7219_Digit	16	static
+max7219.c:87:6:MAX7219_Decode	16	static
+max7219.c:96:6:MAX7219_Intensity	16	static
+max7219.c:106:6:MAX7219_ScanLimit	16	static
+max7219.c:116:6:MAX7219_ShutDown	16	static
+max7219.c:126:6:MAX7219_Test	16	static
+max7219.c:136:13:SS_Select	8	static
+max7219.c:142:13:SS_Deselect	8	static
+max7219.c:148:13:SPI_Tx	16	static
+max7219.c:154:13:DelayInit	4	static,ignoring_inline_asm
+max7219.c:170:13:DelayUS	32	static

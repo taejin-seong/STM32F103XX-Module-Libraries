@@ -1,7 +1,7 @@
-00:16:31 **** Incremental Build of configuration Debug for project stm32f103_fw_module ****
+00:41:39 **** Incremental Build of configuration Debug for project stm32f103_fw_module ****
 make -j4 all 
 arm-none-eabi-size   stm32f103_fw_module.elf 
    text	   data	    bss	    dec	    hex	filename
-  32188	    504	   2472	  35164	   895c	stm32f103_fw_module.elf
+  31340	    504	   2576	  34420	   8674	stm32f103_fw_module.elf
 Finished building: default.size.stdout
  

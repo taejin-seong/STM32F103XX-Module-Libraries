@@ -11,6 +11,7 @@
 
 
 
+#include <max7219_dotmatrix.h>
 #include "hw_def.h"
 
 
@@ -20,6 +21,8 @@
 #include "uart.h"
 #include "i2c.h"
 #include "spi.h"
+#include "max7219.h"
+#include "max7219_dotmatrix.h"
 #include "clcd.h"
 #include "nrf24l01.h"
 #include "gpio.h"

@@ -1,0 +1,85 @@
+/*
+ * max7219_8x8_led.h
+ *
+ *  Created on: 2022. 3. 23.
+ *      Author: sungt
+ */
+
+#ifndef SRC_COMMON_HW_INCLUDE_CLCD_H_
+#define SRC_COMMON_HW_INCLUDE_CLCD_H_
+
+#include "hw_def.h"
+
+
+#ifdef _USE_HW_DOT_MATRIX
+
+
+
+
+
+
+/* Select the SPIx port, you used */
+//#define DOT_MATRIX_SPI_PORT                         hspi1
+#define DOT_MATRIX_SPI_PORT                       hspi2
+
+
+/* GPIO configuration */
+													  /* Dot Matrix GPIO Pin 변경 시 수정 (1) */
+
+#define DOT_MATRIX_SPI_GPIO_CLK_ENABLE()                __HAL_RCC_GPIOA_CLK_ENABLE()
+#define DOT_MATRIX_SPI_GPIO_PORT                        GPIOA
+#define DOT_MATRIX1_SPI_SCK_PIN                         GPIO_PIN_13
+#define DOT_MATRIX_SPI_MOSI_PIN                         GPIO_PIN_15
+
+#define DOT_MATRIX_SPI_CS_CLK_ENABLE()                  __HAL_RCC_GPIOB_CLK_ENABLE()
+#define DOT_MATRIX_SPI_CS_PORT                          GPIOB
+#define DOT_MATRIX_SPI_CS_PIN                           GPIO_PIN_8
+
+#define DOT_MATRIX_SPI_CS_ENABLE()                      HAL_GPIO_WritePin(DOT_MATRIX_SPI_CS_PORT, DOT_MATRIX_SPI_CS_PIN, GPIO_PIN_RESET)
+#define DOT_MATRIX_SPI_CS_DISABLE()                     HAL_GPIO_WritePin(DOT_MATRIX_SPI_CS_PORT, DOT_MATRIX_SPI_CS_PIN, GPIO_PIN_SET)
+
+/* MAX7219 Register Address */
+
+
+#define NO_OP											0x00
+#define DIGIT_0											0x01
+#define DIGIT_1											0x02
+#define DIGIT_2											0x03
+#define DIGIT_3											0x04
+#define DIGIT_4											0x05
+#define DIGIT_5											0x06
+#define DIGIT_6											0x07
+#define DIGIT_7											0x08
+#define DECODE_MODE										0x09
+#define INTENSITY										0x0A
+#define SCAN_LIMIT										0x0B
+#define SHUTDOWN										0x0C
+#define DISPLAY_TEST									0x0F
+
+/* Dot Matrix State ON/OFF */
+
+#define MATRIX_ON										1
+#define MATRIX_OFF										0
+
+#define ML_NB_MAX7219									4
+
+
+
+
+
+
+
+
+
+void dotmatrix_Init(void);
+
+void dotmatrix_DisplayTestMode(uint8_t OnOff);
+bool dotmatrix_DisplayOnOff(uint8_t OnOff);
+void dotmatrix_SetIntensity(uint8_t intensity);
+void dotmatrix_Position(uint8_t index, uint8_t position);
+bool dotmatrix_Str(char string[]);
+
+
+#endif /* _USE_HW_DOT_MATRIX */
+
+#endif /* SRC_COMMON_HW_INCLUDE_CLCD_H_ */

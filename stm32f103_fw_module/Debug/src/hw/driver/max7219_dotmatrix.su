@@ -1,0 +1,8 @@
+max7219_dotmatrix.c:111:6:MAX7219_MatrixInit	32	static
+max7219_dotmatrix.c:143:6:MAX7219_MatrixClear	24	static
+max7219_dotmatrix.c:151:6:MAX7219_MatrixSetRow	24	static
+max7219_dotmatrix.c:159:6:MAX7219_MatrixSetRow64	32	static
+max7219_dotmatrix.c:169:6:MAX7219_MatrixSetPixel	16	static
+max7219_dotmatrix.c:174:6:MAX7219_MatrixRShift	24	static
+max7219_dotmatrix.c:198:6:MAX7219_MatrixLShift	24	static
+max7219_dotmatrix.c:222:6:MAX7219_MatrixUpdate	24	static

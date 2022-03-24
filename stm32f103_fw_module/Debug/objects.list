@@ -12,6 +12,8 @@
 "src/hw/driver/gpio.o"
 "src/hw/driver/i2c.o"
 "src/hw/driver/led.o"
+"src/hw/driver/max7219.o"
+"src/hw/driver/max7219_dotmatrix.o"
 "src/hw/driver/nrf24l01.o"
 "src/hw/driver/spi.o"
 "src/hw/driver/uart.o"

@@ -1,0 +1,330 @@
+/*
+ * max7219_8x8_led.c
+ *
+ *  Created on: 2022. 3. 23.
+ *      Author: sungt
+ */
+
+
+#include "dot_matrix.h"
+#include "spi.h"
+
+
+
+uint8_t matrix_onoff_flags = 0;
+
+/*  Buffer that contains the string to display in bit format.
+ *  Horizontal line in this table correspond to a vertical line on LED matrice */
+#define NB_MAX_CHAR_IN_STRING 	50
+#define MATRIX_COLUMN_NUMBER 	(8 * 4)
+static uint8_t 	  display_buffer[8 * NB_MAX_CHAR_IN_STRING];
+
+
+/* Buffer to send data over SPI */
+static uint8_t 	  serial_format[4 * ML_NB_MAX7219];
+
+
+/* Function prototypes -------------------------------------------------------*/
+static uint16_t dotmatrix_StoreStringInBuffer( char string[]);
+static bool  	dotmatrix_DisplayBuffer( uint8_t *BufferToDisplay);
+
+
+
+
+
+
+
+
+static uint16_t dotmatrix_StoreStringInBuffer( char string[])
+{
+	uint8_t  cptCharString = 0;
+	uint8_t  cptCol;
+	uint8_t  NbCharInString = (uint8_t)strlen((const char *)string);
+	uint8_t  indexInAsciiTable;
+	uint16_t bufferIndex = 0;
+
+	if( NB_MAX_CHAR_IN_STRING <= NbCharInString )
+		return 1;
+
+	bufferIndex = 0;
+	while( cptCharString < NbCharInString)
+	{
+		indexInAsciiTable = (uint8_t)(string[cptCharString] - ' ');
+
+		for( cptCol=0; cptCol<7; cptCol++)
+		{
+			display_buffer[bufferIndex] = ASCII[indexInAsciiTable][cptCol];
+			bufferIndex++;
+		}
+
+		cptCharString++;
+	}
+
+	return bufferIndex;
+}
+
+
+static bool dotmatrix_DisplayBuffer( uint8_t *BufferToDisplay)
+{
+	bool ret = false;
+
+	uint8_t  cpt_digit;
+
+	uint8_t  module;
+	uint16_t bufferColIndex;
+	uint8_t  col;
+	uint8_t  buffer[32];
+
+
+	//matriceLed_SwitchOnOff( MATRICE_OFF);
+	bufferColIndex = 0;
+
+	/* Re-arrange data in display buffer */
+	for( module = 0; module < 4; module++)
+	{
+		for( col=0; col<8; col++)
+		{
+			uint8_t cpt = 8;
+
+			buffer[bufferColIndex] = 0;
+			while( cpt > 0)
+			{
+				cpt--;
+				buffer[bufferColIndex] |= ((BufferToDisplay[(module*8) + cpt] >> (bufferColIndex%8)) & 0x01) << (7-cpt);
+			}
+			bufferColIndex++;
+		}
+	}
+
+	for( cpt_digit = 0; cpt_digit<8; cpt_digit++)
+	{
+		serial_format[1] = DIGIT_0 + cpt_digit;
+		serial_format[0] = buffer[cpt_digit];
+
+		serial_format[3] = DIGIT_0 + cpt_digit;
+		serial_format[2] = buffer[cpt_digit+8];
+
+		serial_format[5] = DIGIT_0 + cpt_digit;
+		serial_format[4] = buffer[cpt_digit+16];
+
+		serial_format[7] = DIGIT_0 + cpt_digit;
+		serial_format[6] = buffer[cpt_digit+24];
+
+	    DOT_MATRIX_SPI_CS_ENABLE();
+	    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, serial_format, ML_NB_MAX7219, 100);
+	    DOT_MATRIX_SPI_CS_DISABLE();
+	}
+
+	delay_ms(50);
+
+	return ret;
+}
+
+
+/* Dot Matrix Pin 변경 시 헤더파일만 변경하면 됨  */
+void dotmatrix_Init(void)
+{
+    /* 클럭 활성화는  bsp.c 에서 처리 함*/
+
+	uint8_t cpt;
+
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    /*Configure GPIO pin Output Level */
+    HAL_GPIO_WritePin(DOT_MATRIX_SPI_CS_PORT, DOT_MATRIX_SPI_CS_PIN, GPIO_PIN_SET);
+
+    /*Configure GPIO pins : PBPin PBPin */
+    GPIO_InitStruct.Pin   = DOT_MATRIX_SPI_CS_PIN ;
+    GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(DOT_MATRIX_SPI_CS_PORT, &GPIO_InitStruct);
+
+
+
+    /* Set Dot Matrix in Shutdown Mode */
+	for( cpt=0; cpt<ML_NB_MAX7219; cpt++)
+	{
+		serial_format[2*cpt] = 0x00;
+		serial_format[2*cpt + 1] = SHUTDOWN;
+	}
+    DOT_MATRIX_SPI_CS_ENABLE();
+    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, (uint8_t *)serial_format, ML_NB_MAX7219, 100);
+    DOT_MATRIX_SPI_CS_DISABLE();
+
+    delay_ms(5);
+
+
+	/* Set normal operation mode */
+	for( cpt=0; cpt<ML_NB_MAX7219; cpt++)
+	{
+		serial_format[2*cpt] = 0x01;
+		serial_format[2*cpt + 1] = SHUTDOWN;
+	}
+    DOT_MATRIX_SPI_CS_ENABLE();
+    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, (uint8_t *)serial_format, ML_NB_MAX7219, 100);
+    DOT_MATRIX_SPI_CS_DISABLE();
+
+
+    delay_ms(5);
+
+
+	/* Set decode mode to no decode */
+	for( cpt=0; cpt<ML_NB_MAX7219; cpt++)
+	{
+		serial_format[2*cpt] = 0x00;
+		serial_format[2*cpt + 1] = DECODE_MODE;
+	}
+    DOT_MATRIX_SPI_CS_ENABLE();
+    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, (uint8_t *)serial_format, ML_NB_MAX7219, 100);
+    DOT_MATRIX_SPI_CS_DISABLE();
+
+
+    delay_ms(5);
+
+
+	/* Set default intensity */
+	for( cpt=0; cpt<ML_NB_MAX7219; cpt++)
+	{
+		serial_format[2*cpt] = 0x00;
+		serial_format[2*cpt + 1] = INTENSITY;
+	}
+    DOT_MATRIX_SPI_CS_ENABLE();
+    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, (uint8_t *)serial_format, ML_NB_MAX7219, 100);
+    DOT_MATRIX_SPI_CS_DISABLE();
+
+
+    delay_ms(5);
+
+
+	/* Set display to all digit */
+	for( cpt=0; cpt<ML_NB_MAX7219; cpt++)
+	{
+		serial_format[2*cpt] = 0x07;
+		serial_format[2*cpt + 1] = SCAN_LIMIT;
+
+	}
+    DOT_MATRIX_SPI_CS_ENABLE();
+    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, (uint8_t *)serial_format, ML_NB_MAX7219, 100);
+    DOT_MATRIX_SPI_CS_DISABLE();
+
+	/* Matrice is ON */
+    matrix_onoff_flags = 1;
+}
+
+
+void dotmatrix_DisplayTestMode(uint8_t OnOff)
+{
+	uint8_t cpt;
+
+	if(OnOff)
+	{
+		OnOff = 0x01;
+	}
+
+	else
+	{
+		OnOff = 0x00;
+	}
+
+	/* Set display to all digit */
+	for( cpt=0; cpt<ML_NB_MAX7219; cpt++)
+	{
+		serial_format[2*cpt] = OnOff;
+		serial_format[2*cpt + 1] = DISPLAY_TEST;
+	}
+    DOT_MATRIX_SPI_CS_ENABLE();
+    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, (uint8_t *)serial_format, ML_NB_MAX7219, 100);
+    DOT_MATRIX_SPI_CS_DISABLE();
+}
+
+
+bool dotmatrix_DisplayOnOff(uint8_t OnOff)
+{
+	uint8_t cpt;
+	bool ret = false;
+
+	if( OnOff)
+		OnOff = 0x01;
+	else
+		OnOff = 0x00;
+
+	/* If already in requested state, just return */
+	if( matrix_onoff_flags == OnOff)
+		return ret;
+
+	/* Set display to all digit */
+	for( cpt=0; cpt<ML_NB_MAX7219; cpt++)
+	{
+		serial_format[2*cpt] = OnOff;
+		serial_format[2*cpt + 1] = SHUTDOWN;
+	}
+    DOT_MATRIX_SPI_CS_ENABLE();
+    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, serial_format, ML_NB_MAX7219, 100);
+    DOT_MATRIX_SPI_CS_DISABLE();
+
+    matrix_onoff_flags = OnOff;
+
+    return ret;
+
+}
+
+
+void dotmatrix_SetIntensity(uint8_t intensity)
+{
+	uint8_t cpt;
+
+	intensity = ( intensity < 0x10 ? intensity : 0x0F);
+
+	/* Set default intensity */
+	for( cpt=0; cpt<ML_NB_MAX7219; cpt++)
+	{
+		serial_format[2*cpt] = intensity;
+		serial_format[2*cpt + 1] = INTENSITY;
+	}
+    DOT_MATRIX_SPI_CS_ENABLE();
+    HAL_SPI_Transmit(&DOT_MATRIX_SPI_PORT, (uint8_t *)serial_format, ML_NB_MAX7219, 100);
+    DOT_MATRIX_SPI_CS_DISABLE();
+}
+
+
+uint8_t dotmatrix_Position(uint8_t index, uint8_t position)
+{
+	uint8_t cpt = 8;
+	uint8_t val = 0;
+
+	while ( cpt > 0)
+	{
+		cpt --;
+		val |= ((ASCII[index][cpt] >> position) & 0x01) << (7-cpt);
+	}
+
+	return val;
+}
+
+
+bool dotmatrix_Str(char string[])
+{
+	bool ret = false;
+	uint16_t NbColInMatrix;
+	uint8_t bufferColIndex = 0;
+
+	memset( display_buffer, 0x00, 8*NB_MAX_CHAR_IN_STRING);
+
+	/* First : store the string to display in the matrix memory buffer
+	 * It's this matrix that will be displayed. 	 */
+	NbColInMatrix = dotmatrix_StoreStringInBuffer(string);
+	if( !NbColInMatrix)
+		return !ret;
+
+	/* Second : Display the matrice content */
+	bufferColIndex = 0;
+	do
+	{
+		dotmatrix_DisplayBuffer(&display_buffer[bufferColIndex]);
+		bufferColIndex++;
+	} while( MATRIX_COLUMN_NUMBER < (NbColInMatrix-bufferColIndex));
+
+	return ret;
+
+}
