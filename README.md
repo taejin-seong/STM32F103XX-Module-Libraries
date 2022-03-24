@@ -6,6 +6,7 @@
 |**DFplayer Mini**|[📌](https://www.devicemart.co.kr/goods/view?no=1278727)|✓|
 |**NRF24L01**|[📌](https://www.devicemart.co.kr/goods/view?no=12506373)|✓|
 |**1602 CLCD With I2C**|[📌](https://www.devicemart.co.kr/goods/view?no=1327456)|✓|
+|**8*8 Dot Matrix With MAX7219**|[📌](https://www.devicemart.co.kr/goods/view?no=1279804)|✓|
 
 
 <br><br>
@@ -38,7 +39,17 @@
 -  &nbsp; stm32f103_fw_module → src → common → hw → include → clcd.h<br>
 -  &nbsp; stm32f103_fw_module → src → hw → driver → clcd.c<br>
 -  &nbsp; stm32f103_fw_module → src → ap → ap.c → void apCLCDTest(void){...}<br>
-</div>	
+</div>
+<hr/>
+<summary>8*8 Dot Matrix With MAX7219</summary>
+<div markdown="1">
+<br>
+-  &nbsp; stm32f103_fw_module → src → common → hw → include →  max7219.h<br>	
+-  &nbsp; stm32f103_fw_module → src → common → hw → include →  max7219_dotmatrix.h<br>
+-  &nbsp; stm32f103_fw_module → src → hw → driver → max7219.c<br>
+-  &nbsp; stm32f103_fw_module → src → hw → driver → max7219_dotmatrix.c<br>	
+-  &nbsp; stm32f103_fw_module → src → ap → ap.c → void apDotMatrixTest(void){...}<br>
+</div>		
 </details>
 
 
@@ -63,7 +74,7 @@
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
-<img src="https://user-images.githubusercontent.com/70312248/159523835-b6dba5ad-b59c-4139-8e03-6b39ae890903.png" width="600" height="500"/> <br>
+<img src="https://user-images.githubusercontent.com/70312248/159958979-4f03b977-3f47-40a6-8b74-0e6e0e05b53b.png" width="600" height="500"/> <br>
 <br><br>
 </div>
 </details>
@@ -83,12 +94,18 @@
 </div>
 </details>
 
-#### 3.2. SPI1
+#### 3.2. SPI1 & SPI2
 <details>
 <summary>📌</summary><br> 
 • You can change parameter settings in spi.c <br><br> 
 <div markdown="1">
-<img src="https://user-images.githubusercontent.com/70312248/156927368-b1cff53b-974c-42e0-80a3-1a3baf264159.png" width="1000" height="800"/> 
+1).SPI1<br><br> 	
+<img src="https://user-images.githubusercontent.com/70312248/156927368-b1cff53b-974c-42e0-80a3-1a3baf264159.png" width="1000" height="800"/>
+ 
+<br><br><br><br>
+
+2).SPI2<br><br>
+<img src="https://user-images.githubusercontent.com/70312248/159957635-1bdc1f67-084f-4d28-a9c3-85821895070f.png" width="1000" height="800"/> 	
 <br><br>
 </div>
 </details>
@@ -107,7 +124,7 @@
 <details>
 <summary>📌</summary><br> 
 <div markdown="1">
-<img src="https://user-images.githubusercontent.com/70312248/156927391-3ef2943d-5674-498d-b65c-b1d23465881e.png" width="1000" height="500"/> 
+<img src="https://user-images.githubusercontent.com/70312248/159959285-bc493d3a-595a-4388-87f2-ba588e34d70d.png" width="1000" height="500"/> 
 <br><br>
 </div>
 </details>
@@ -155,9 +172,19 @@ int main(void)
 //	apNRF24L01RxTest();
 //	apNRF24L01TxTest();
 //      apCLCDTest();
+//      apDotMatrixTest();
 
     return 0;
 }
 ```
 <br><br>
 ## Note<br>
+`clcd.h`와 `max7219.h`의  #define에서  0x00~0x0f 부분이 중복되어 오류가 발생합니다. 따라서  clcd와 dot matrix는  동시에 테스트할 수 없습니다. 양쪽(clcd & dot matrix)을 동시에 테스트하려면 max7219.h의 #define 0x00 ~0x0f 부분을 static const하게 선언하여 사용해야합니다.
+
+An error occurs due to overlapping parts 0x00~0x0f in #define of `clcd.h` and `max7219.h`. Therefore, clcld and dot matrix cannot be tested at the same time.
+To test both simultaneously (clcd & dot matrix), you must use the static const declaration of #define 0x00 to 0x0f (max7219.h).
+
+
+<br><br>
+## Refer<br>
+• **8x8 Dot Matrix**  : https://github.com/eziya/STM32_HAL_MAX7219_8x8_MATRIX
