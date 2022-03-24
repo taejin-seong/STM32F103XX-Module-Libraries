@@ -211,7 +211,7 @@ int main(void)
 `clcd.h`와 `max7219.h`의  #define에서  0x00~0x0f 부분이 중복되어 오류가 발생합니다. 따라서  clcd와 dot matrix는  동시에 테스트할 수 없습니다. 양쪽(clcd & dot matrix)을 동시에 테스트하려면 max7219.h의 #define 0x00 ~0x0f 부분을 static const하게 선언하여 사용해야합니다.
 
 An error occurs due to overlapping parts 0x00~0x0f in #define of `clcd.h` and `max7219.h`. Therefore, clcld and dot matrix cannot be tested at the same time.
-To test both simultaneously (clcd & dot matrix), you must use the static const declaration of #define 0x00 to 0x0f (max7219.h).
+To test both simultaneously (clcd & dot matrix), you must use the static const declaration of #define 0x00 ~ 0x0f (max7219.h).
 
 
 <br><br>
