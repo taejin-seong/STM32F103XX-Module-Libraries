@@ -156,7 +156,7 @@
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
-• USART1, USART2 Mode is Rx Mode : Circular, Tx Mode : Normal <br><br>
+• USART1, USART2 Mode → Rx Mode : Circular,&nbsp;&nbsp;Tx Mode : Normal <br><br>
 <img src="https://user-images.githubusercontent.com/70312248/156927328-636cea39-5139-4d75-a712-6036b3b737fb.png" width="1000" height="300"/> 
 <br><br>
 </div>
