@@ -26,7 +26,7 @@
 
 ## Where's the file?<br>
 <details>
-<summary>📌</summary><br>
+<summary>:open_file_folder:</summary><br>
   
 <summary>DFplayer Mini</summary>  
 <div markdown="1">
@@ -219,3 +219,37 @@ To test both simultaneously (clcd & dot matrix), you must use the static const d
 
 ## Refer<br>
 🔗 **8x8 Dot Matrix**  : https://github.com/eziya/STM32_HAL_MAX7219_8x8_MATRIX
+
+<br><br>
+
+## Test Pic<br>
+<details>
+<summary>🔍</summary><br>
+ 
+<summary>DFplayer Mini</summary>
+<div markdown="1">
+<br>
+<img src="https://user-images.githubusercontent.com/70312248/160285371-4d8a28d3-08db-4071-aee9-eca2b0d1d6bc.png" width="300" height="300"/> 
+</div>
+<br>
+
+<summary>NRF24L01</summary>
+<div markdown="1">
+<br>
+<img src="https://user-images.githubusercontent.com/70312248/160285791-28219e26-f6f1-47f3-bae3-bc669fdde01b.png" width="500" height="300"/> 
+</div>
+<br>
+
+<summary>1602 CLCD With I2C</summary>
+<div markdown="1">
+<br>
+<img src="https://user-images.githubusercontent.com/70312248/160285911-ba6bbfc3-5d7b-485e-af2a-4baaee6952e5.png" width="500" height="300"/> 
+</div>
+<br>
+
+<summary>8*8 Dot Matrix With MAX7219</summary>
+<div markdown="1">
+<br>
+<img src="https://user-images.githubusercontent.com/70312248/160285962-3274f4ed-1688-4f78-b46d-914b1daee9b0.png" width="400" height="300"/> 
+</div>
+</details>
