@@ -156,7 +156,10 @@
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
-• USART1, USART2 Mode → Rx Mode : Circular,&nbsp;&nbsp;Tx Mode : Normal <br><br>
+  • <b> USART1,USART2 DMA Request Setting </b> <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[USART1_RX, USART2_RX]&nbsp;:&nbsp;&nbsp;Mode → <b>Circular</b> <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[USART1_TX, USART2_TX]&nbsp;:&nbsp;&nbsp;Mode → <b>Normal</b> (All Default) <br>
+  <br>
 <img src="https://user-images.githubusercontent.com/70312248/156927328-636cea39-5139-4d75-a712-6036b3b737fb.png" width="1000" height="300"/> 
 <br><br>
 </div>
