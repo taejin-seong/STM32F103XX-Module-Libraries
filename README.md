@@ -261,5 +261,5 @@ To test both simultaneously (clcd & dot matrix), you must use the static const d
 
 
 
-## Refer<br>
+## Refer to<br>
 **8x8 Dot Matrix**  : https://github.com/eziya/STM32_HAL_MAX7219_8x8_MATRIX
