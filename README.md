@@ -1,16 +1,16 @@
-## 1.	Dev environment<br>
-### 1.1.  IDE
+## Dev environment<br>
+### IDE
 * STM32CubeIDE 1.6.0 <br>
 * STM32CubeMX <br>
-### 1.2.  Development Board
+### Development Board
 * **STM32F103C8T6 (Black Pill Board)** <br>
 
 
 
-<br><br>
+<br>
 
 
-## 2.	Component<br>
+## Component<br>
 
 
 |***Part Name***|***Image Link***|***Implementation***|
@@ -22,11 +22,11 @@
 
 
 
-<br><br>
+<br>
 
 
 
-## 3.	Where's the file?<br>
+## Where's the file?<br>
 <details>
 <summary>:open_file_folder:</summary><br>
   
@@ -67,22 +67,24 @@
 </details>
 
 
-<br><br>
+<br>
 
 
-## 4.	Port Allocation Table<br>
+## Port Allocation Table<br>
 <details>
 <summary>📌</summary><br>
 <div markdown="1">
+ <p align="center">	
 <img src="https://user-images.githubusercontent.com/70312248/159966974-f57bcb88-c769-4425-97d6-2144d63ca76c.png" width="500" height="500"/> <br><br>
-</div>		
+	</p>
+	</div>		
 </details>
 
-<br><br>
+<br>
 
 
-## 5.	Cube MX Setting<br>
-### 5.1. Clock Configuration
+## Cube MX Setting<br>
+### Clock Configuration
 <details>
 <summary>📌</summary><br> 
 <div markdown="1">
@@ -95,19 +97,21 @@
 
 <hr/>
 
-### 5.2. Pinout<br>
+### Pinout<br>
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
+	 <p align="center">
 <img src="https://user-images.githubusercontent.com/70312248/159958979-4f03b977-3f47-40a6-8b74-0e6e0e05b53b.png" width="600" height="500"/> <br>
-<br><br>
+	</
+		 <br><br>
 </div>
 </details>
 
 <hr/>
 
-### 5.3. Peripheral Configuration<br>
-#### 5.3.1. UART1 & UART2
+### Peripheral Configuration<br>
+#### 1. UART1 & UART2
 
 <details>
 <summary>📌</summary><br>
@@ -119,7 +123,7 @@
 </div>
 </details>
 
-#### 5.3.2. SPI1 & SPI2
+#### 2. SPI1 & SPI2
 <details>
 <summary>📌</summary><br> 
 • You can change parameter settings in spi.c <br><br> 
@@ -134,7 +138,7 @@
 </div>
 </details>
 
-#### 5.3.3. I2C1
+#### 3. I2C1
 <details>
 <summary>📌</summary><br> 
 • You can change parameter settings in i2c.c <br><br> 
@@ -144,7 +148,7 @@
 </div>
 </details>
 
-#### 5.3.4. GPIO
+#### 4. GPIO
 <details>
 <summary>📌</summary><br> 
 <div markdown="1">
@@ -153,7 +157,7 @@
 </div>
 </details>
 
-#### 5.3.5. DMA
+#### 5. DMA
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
@@ -167,7 +171,7 @@
 </details>
 
 
-#### 5.3.6. NVIC
+#### 6. NVIC
 <details>
 <summary>📌</summary><br>  
 <div markdown="1">
@@ -175,13 +179,13 @@
 <br><br>
 </div>
 </details>
-<hr/>
 
 
-<br><br>
+
+<br>
 
 
-## 6.	How to use<br>
+## How to use<br>
   테스트를 하기 위해서는 `stm32f103_fw_module → src → main.c` 에서 주석을 해제 또는 설정해야 한다.
 
 ```C
@@ -208,22 +212,22 @@ int main(void)
 ```
 
 
-<br><br>
+<br>
 
 
-## 7.	Note<br>
+## Note<br>
 `clcd.h`와 `max7219.h`의  #define에서  0x00~0x0f 부분이 중복되어 오류가 발생합니다. 따라서  clcd와 dot matrix는  동시에 테스트할 수 없습니다. 양쪽(clcd & dot matrix)을 동시에 테스트하려면 max7219.h의 #define 0x00 ~0x0f 부분을 static const하게 선언하여 사용해야합니다.
 
 An error occurs due to overlapping parts 0x00~0x0f in #define of `clcd.h` and `max7219.h`. Therefore, clcld and dot matrix cannot be tested at the same time.
 To test both simultaneously (clcd & dot matrix), you must use the static const declaration of #define 0x00 ~ 0x0f (max7219.h).
 
 
-<br><br>
+<br>
 
 
-## 8.	Test Pic<br>
+## Test Pic<br>
 <details>
-<summary>🔍</summary><br>
+<summary>🚩</summary><br>
  
 <summary>DFplayer Mini</summary>
 <div markdown="1">
@@ -258,4 +262,4 @@ To test both simultaneously (clcd & dot matrix), you must use the static const d
 
 
 ## Refer<br>
-🔗 **8x8 Dot Matrix**  : https://github.com/eziya/STM32_HAL_MAX7219_8x8_MATRIX
+**8x8 Dot Matrix**  : https://github.com/eziya/STM32_HAL_MAX7219_8x8_MATRIX
