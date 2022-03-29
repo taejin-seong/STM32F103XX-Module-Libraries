@@ -257,7 +257,7 @@ To test both simultaneously (clcd & dot matrix), you must use the static const d
 </div>
 </details>
 
-<br><br>
+<br>
 
 
 
