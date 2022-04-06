@@ -110,7 +110,7 @@
 
 <hr/>
 
-### Peripheral Configuration<br>
+### Peripheral & Core Configuration<br>
 #### 1. UART1 & UART2
 
 <details>
