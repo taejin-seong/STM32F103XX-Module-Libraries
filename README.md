@@ -232,10 +232,10 @@ When you build a project, you must **exclude** folders in the following paths fr
   <summary>:pushpin:</summary><br>
 <div markdown="1">
   • Click <b>Core</b> folder and proceed with the following steps.   <br><br>
-<img src="https://user-images.githubusercontent.com/70312248/166666504-b65bb2b8-3d73-4d9b-8022-54a35c26f02e.png" width="450" height="550"/> 
+  <img src="https://user-images.githubusercontent.com/70312248/166666504-b65bb2b8-3d73-4d9b-8022-54a35c26f02e.png" width="440" height="550"/> 
  　　　
-<img src="https://user-images.githubusercontent.com/70312248/166665088-0c16c066-1b22-406a-b485-4e3af1d21884.png" width="330" height="450"/> 
-<br><br><br>
+<img src="https://user-images.githubusercontent.com/70312248/166665088-0c16c066-1b22-406a-b485-4e3af1d21884.png" width="310" height="450"/> 
+<br><br><br><br>
   
 • The results are as follows. <br><br>
 <img src="https://user-images.githubusercontent.com/70312248/166665097-75e0de2d-5408-4d7c-8544-dc5f011807af.png" width="100" height="35"/> 
