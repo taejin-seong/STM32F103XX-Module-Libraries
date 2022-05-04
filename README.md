@@ -216,13 +216,37 @@ int main(void)
 
 
 ## Note<br>
+### 1.
 `clcd.h`와 `max7219.h`의  #define에서  0x00~0x0f 부분이 중복되어 오류가 발생합니다. 따라서  clcd와 dot matrix는  동시에 테스트할 수 없습니다. 양쪽(clcd & dot matrix)을 동시에 테스트하려면 max7219.h의 #define 0x00 ~0x0f 부분을 static const하게 선언하여 사용해야합니다.
 
 An error occurs due to overlapping parts 0x00~0x0f in #define of `clcd.h` and `max7219.h`. Therefore, clcld and dot matrix cannot be tested at the same time.
 To test both simultaneously (clcd & dot matrix), you must use the static const declaration of #define 0x00 ~ 0x0f (max7219.h).
 
 
+### 2. 
+프로젝트를 빌드할 때는 다음 경로에 있는 폴더를 빌드 및 디버그 항목에서 제외해야 합니다.<br>
+When you build a project, you must **exclude** folders in the following paths from the build and debug entries: <br>
+* **`stm32f411ceu6_fw_module → src → lib → Core`**
+#### **How to exclude**
+<details>
+  <summary>:pushpin:</summary><br>
+<div markdown="1">
+  • Click <b>Core</b> folder and proceed with the following steps.   <br><br>
+<img src="https://user-images.githubusercontent.com/70312248/166666504-b65bb2b8-3d73-4d9b-8022-54a35c26f02e.png" width="450" height="550"/> 
+ 　　　
+<img src="https://user-images.githubusercontent.com/70312248/166665088-0c16c066-1b22-406a-b485-4e3af1d21884.png" width="330" height="450"/> 
+<br><br><br>
+  
+• The results are as follows. <br><br>
+<img src="https://user-images.githubusercontent.com/70312248/166665097-75e0de2d-5408-4d7c-8544-dc5f011807af.png" width="100" height="35"/> 
+<br><br><br>
+  
+</div>		
+</details>
+
 <br>
+
+
 
 
 ## Test Pic<br>
