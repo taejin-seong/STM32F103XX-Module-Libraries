@@ -152,7 +152,7 @@
 <details>
 <summary>📌</summary><br> 
 <div markdown="1">
-<img src="https://user-images.githubusercontent.com/70312248/159959285-bc493d3a-595a-4388-87f2-ba588e34d70d.png" width="1000" height="500"/> 
+<img src="https://user-images.githubusercontent.com/70312248/159959285-bc493d3a-595a-4388-87f2-ba588e34d70d.png" width="1000" height="300"/> 
 <br><br>
 </div>
 </details>
@@ -165,7 +165,7 @@
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[USART1_RX, USART2_RX]&nbsp;:&nbsp;&nbsp;Mode → <b>Circular</b> <br>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;[USART1_TX, USART2_TX]&nbsp;:&nbsp;&nbsp;Mode → <b>Normal</b> (All Default) <br>
   <br>
-<img src="https://user-images.githubusercontent.com/70312248/156927328-636cea39-5139-4d75-a712-6036b3b737fb.png" width="1000" height="300"/> 
+<img src="https://user-images.githubusercontent.com/70312248/156927328-636cea39-5139-4d75-a712-6036b3b737fb.png" width="1000" height="250"/> 
 <br><br>
 </div>
 </details>
