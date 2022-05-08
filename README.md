@@ -186,7 +186,7 @@
 
 
 ## How to use<br>
-  테스트를 하기 위해서는 `stm32f103_fw_module → src → main.c` 에서 주석을 해제 또는 설정해야 합니다..
+  테스트를 하기 위해서는 `stm32f103_fw_module → src → main.c` 에서 주석을 해제 또는 설정해야 합니다.
 
 ```C
 #include "main.h"
